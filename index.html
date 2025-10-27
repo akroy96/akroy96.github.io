@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Akash Kumar Roy — Portfolio</title>
+  <style>
+    /* Reset + base */
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#00d1ff;--glass:rgba(255,255,255,0.04);
+      --glass-2:rgba(255,255,255,0.02);
+    }
+    [data-theme='light']{--bg:#f6f8fb;--card:#ffffff;--muted:#445166;--accent:#0066ff;--glass:rgba(0,0,0,0.03);--glass-2:rgba(0,0,0,0.02)}
+    html,body{height:100%}
+    body{background:linear-gradient(140deg,#0f1724 0%,#0d1a2b 40%,#091629 70%,#07101f 100%);color:#e6eef6;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.45;padding:28px}
+
+    /* Layout */
+    .wrap{max-width:1100px;margin:0 auto}
+    header{position:sticky;top:0;backdrop-filter:blur(12px);background:var(--glass-2);display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .avatar{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#7b61ff);display:grid;place-items:center;font-weight:700;color:#041025;font-size:20px;box-shadow:0 6px 30px rgba(0,0,0,0.5)}
+    .intro h1{font-size:20px;letter-spacing:0.2px}
+    .intro p{color:var(--muted);font-size:13px;margin-top:6px}
+
+    /* Nav */
+    nav{display:flex;gap:10px}
+    nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 10px;border-radius:8px}
+    nav a:hover{background:var(--glass);color:var(--accent)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:24px;margin-top:22px;align-items:start}
+    .card{background:var(--glass);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:22px;backdrop-filter:blur(14px) saturate(160%);box-shadow:0 8px 28px rgba(0,0,0,0.45);}
+    .bio{padding:22px}
+    .bio h2{font-size:18px;margin-bottom:8px}
+    .bullets{margin-top:12px}
+    .bullets li{margin:8px 0;color:var(--muted);font-size:14px}
+
+    /* Right hero */
+    .hero-right{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+    .stats{display:flex;gap:10px}
+    .stat{flex:1;background:var(--card);padding:12px;border-radius:10px;text-align:center}
+    .stat strong{display:block;font-size:18px}
+    .cta{display:flex;gap:10px;margin-top:10px}
+    .btn{padding:8px 12px;border-radius:10px;border:none;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#7b61ff);color:#041025}
+    .btn.ghost{background:transparent;border:1px solid var(--glass);color:var(--muted)}
+
+    /* Sections */
+    section{margin-top:48px}
+    h3{font-size:16px;margin-bottom:12px}
+
+    /* Projects grid */
+    .projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+    .proj{cursor:pointer;transition:transform .25s, box-shadow .25s;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;position:relative;overflow:hidden}
+    .proj .title{font-weight:700}
+    .proj .meta{color:var(--muted);font-size:13px;margin-top:6px}
+    .proj .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:var(--glass);color:var(--muted)}
+    .proj:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.55);} .proj::after{content:'';position:absolute;right:-80px;top:-50px;width:200px;height:200px;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.03), transparent);transform:rotate(20deg)}
+
+    /* Research card */
+    .research{display:flex;gap:12px;align-items:flex-start}
+    .research .paper{flex:1;padding:14px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.015),transparent)}
+    .paper p{color:var(--muted)}
+
+    /* Skills cloud */
+    .skills{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{padding:8px 10px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);font-size:13px;color:var(--muted)}
+
+    /* Timeline */
+    .timeline{border-left:2px dashed rgba(255,255,255,0.03);padding-left:18px}
+    .event{margin-bottom:18px}
+    .event time{display:block;color:var(--muted);font-size:13px}
+    .event p{margin-top:6px}
+
+    /* Footer */
+    footer{margin-top:30px;padding:18px;border-radius:12px;background:var(--glass-2);display:flex;justify-content:space-between;align-items:center}
+    footer a{color:var(--accent);text-decoration:none}
+
+    /* Small screens */
+    @media(max-width:860px){
+      .hero{grid-template-columns:1fr;}
+      .avatar{width:56px;height:56px;border-radius:12px}
+    }
+
+    /* subtle entrance animation */
+    .fade-up{opacity:0;transform:translateY(8px);animation:up 700ms ease forwards}
+    .fade-up.delay{animation-delay:80ms}
+    @keyframes up{to{opacity:1;transform:none}}
+
+    html{scroll-behavior:smooth}
+  .avatar{box-shadow:0 0 18px var(--accent),0 0 32px rgba(0,209,255,0.25)}
+  h3{position:relative;display:inline-block}
+  h3::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
+  .proj{position:relative}
+  .proj a{position:absolute;inset:0;}
+.grid-bg{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:40px 40px;overflow:hidden}
+.grid-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.06) 50%,transparent 100%);mix-blend-mode:screen;animation:scan 10s linear infinite}
+@keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+</style>
+</head>
+<body data-theme="dark">
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="avatar">AK</div>
+        <div class="intro">
+          <h1>Akash Kumar Roy</h1>
+          <p>Applied AI + Signal Processing | M.Tech Researcher</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#research">Research</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="card bio fade-up">
+          <h2>Quick Snapshot</h2>
+          <ul class="bullets">
+            <li>M.Tech researcher in Signal & Image Processing from NIT Rourkela with 2+ years of AI/ML experience at Vodafone.</li>
+            <li>Worked on cloud segmentation, radar/signal processing, MLOps, and applied ML deployments in AWS/GCP.</li>
+            <li>Reduced AWS costs by 30%, improved ETL runtime by 20%, and deployed ML pipelines using Vertex AI & Kubeflow.</li>
+            <li>Seeking roles in Applied AI / ML Research to build scalable research-driven AI systems.</li>
+          </ul>
+        </div>
+
+        <div class="hero-right">
+          <div class="card stats fade-up delay" style="text-align:left;display:flex;flex-direction:column;gap:14px">
+            <div>
+              <h3>Key Skills</h3>
+            <div class="skills" style="margin-top:10px">
+              <div class="chip">Python</div>
+              <div class="chip">PyTorch</div>
+              <div class="chip">TensorFlow</div>
+              <div class="chip">MLOps</div>
+              <div class="chip">AWS / GCP</div>
+              <div class="chip">Computer Vision</div>
+              <div class="chip">Signal Processing</div>
+              <div class="chip">Docker</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="projects" class="fade-up">
+        <h3>Highlighted Projects</h3>
+        <div class="projects">
+          <div class="proj"><a href="https://github.com/akroy96/object-detection-microservices" target="_blank"></a><div class="title">Object Detection Microservices</div>
+            <div class="meta">YOLOv3 · Flask · Docker</div>
+            <div class="tags"><span class="tag">CPU-optimized</span><span class="tag">REST API</span><span class="tag">Real-time</span></div>
+          </div>
+
+          <div class="proj"><div class="title">Cloud Segmentation (UNet)</div>
+            <div class="meta">NOAA/NASA imagery · Transfer Learning</div>
+            <div class="tags"><span class="tag">+8% IoU</span><span class="tag">UNet</span><span class="tag">Data Aug.</span></div>
+          </div>
+
+          <div class="proj">
+            <div class="title">SME Default Prediction Platform</div>
+            <div class="meta">Python · AWS · SHAP</div>
+            <div class="tags"><span class="tag">Explainability</span><span class="tag">CI/CD</span><span class="tag">Docker</span></div>
+          </div>
+
+          <div class="proj"><a href="https://github.com/akroy96/Real-Time-Face-Recognition" target="_blank"></a><div class="title">Real-Time Emotion Recognition</div>
+            <div class="meta">MobileNet · OpenCV</div>
+            <div class="tags"><span class="tag">FER-2013</span><span class="tag">80%+</span></div>
+          </div>
+
+          <div class="proj"><a href="https://github.com/akroy96/Hack_blue_sky" target="_blank"></a><div class="title">Air Quality Forecasting</div>
+            <div class="meta">SARIMA · LSTM</div>
+            <div class="tags"><span class="tag">Top 50</span><span class="tag">Time Series</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="research" class="fade-up delay">
+        <h3>Research & Publications</h3>
+        <div class="research">
+          <div class="paper">
+            <strong>M.Tech Research — Deep Learning for Cloud Segmentation</strong>
+            <p style="margin-top:8px;color:var(--muted)">Developed UNet-based cloud segmentation on NASA/NOAA satellite data with ~8% improvement over baseline for automated weather analysis.</p>
+          </div>
+          <div style="width:240px">
+            <div class="card" style="padding:12px">
+              <strong>Teaching & Labs</strong>
+              <p style="color:var(--muted);margin-top:8px">Deep Learning TA, RSASP labs — guided 200+ students and assisted in lab design and assessments.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+
+      <section id="experience" class="fade-up delay">
+        <h3>Experience</h3>
+        <div class="timeline">
+          <div class="event">
+            <time>Aug 2023 – Aug 2025</time>
+            <strong>Python AI/ML Developer — Vodafone Intelligent Solutions</strong>
+            <p>Maintained AWS infra, reduced cloud costs by 30%, optimized ETL pipelines by 20%, and developed end-to-end ML pipelines using Vertex AI & Kubeflow for production deployment.</p>
+          </div>
+
+          <div class="event">
+            <time>Sep 2021 – Jun 2023</time>
+            <strong>Deep Learning Teaching Assistant — NIT Rourkela</strong>
+            <p>Taught Python & deep learning, conducted RSASP labs, and improved student feedback through redesigned lab exercises.</p>
+          </div>
+
+          <div class="event">
+            <time>Jan 2020 – Jul 2021</time>
+            <strong>Data Analytics Tutor — Superprof</strong>
+            <p>Mentored students in statistical programming using R and troubleshooting analytical workflows.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="certs" class="fade-up">
+        <h3>Certifications & Achievements</h3>
+        <ul style="margin-top:8px;color:var(--muted)">
+          <li>Blue Sky Challenge — Top 50 / 1147 teams (HackerEarth)</li>
+          <li>Machine Learning with Python — MITx (edX)</li>
+          <li>Data Science: R Basics — MITx (edX)</li>
+          <li>Oracle Cloud Infrastructure — Generative AI (2024)</li>
+          <li>Disaster Risk Management Using Satellite Imagery — NVIDIA</li>
+        </ul>
+      </section>
+
+      <section id="contact" class="fade-up delay">
+        <h3>Contact</h3>
+        <p style="margin-top:8px;font-size:14px;color:#e6eef6">Email: <a href="mailto:akashkumarroy1096@gmail.com" style="color:var(--accent)">akashkumarroy1096@gmail.com</a> · LinkedIn: <a href="https://www.linkedin.com/in/roy-ak/" style="color:var(--accent)">roy-ak</a> · GitHub: <a href="https://github.com/akroy96" style="color:var(--accent)">akroy96</a></p>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>Made with ☕ & code — Akash Kumar Roy</div>
+      <div><a href="https://drive.google.com/file/d/1FjCrzZEEhgrYT3sEd435shd3p5O5ku06/view?usp=sharing">Resume (CV)</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // theme toggle via double-click avatar
+    document.querySelector('.avatar').addEventListener('dblclick',()=>{
+      const root=document.body;root.dataset.theme = root.dataset.theme==='light'? 'dark':'light';
+    });
+    // reveal animations
+    window.addEventListener('load',()=>{document.querySelectorAll('.fade-up').forEach((el,i)=>{el.style.animationDelay=(i*80)+'ms';el.classList.add('visible')})});
+  </script>
+<div class="grid-bg"></div>
+</body>
+</html>
